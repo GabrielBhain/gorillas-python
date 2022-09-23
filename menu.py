@@ -1,1 +1,1 @@
-print("nada")
+print("tudo")
