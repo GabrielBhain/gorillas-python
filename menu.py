@@ -1,2 +1,1 @@
-print("tudo") 
-é sobre isse
+print("e...")
