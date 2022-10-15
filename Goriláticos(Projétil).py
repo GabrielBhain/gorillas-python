@@ -19,17 +19,17 @@ def parab(stdscr, angulo1, velocidade1, x_player):
 
     if(x_player %2 == 0):
         x_player = -w
+        inverter = -1
     else:
         x_player = 0
+        inverter = 1
 
     while(loop_coord == 0):
         if(x < w):
             vy = (velocidade1 * np.sin(theta)) - g*t
-            x =  x_mao_macaco + int(x_player + ((velocidade1*t) * np.cos(theta)))
+            x = int(x_mao_macaco + ((velocidade1*t) * np.cos(theta)) + x_player)*inverter
             y = y_mao_macaco + int(h - ((vy*t))-((0.5*g)*(t**2)))
-            
-            if(x < 0):
-                x *= -1
+
             try:
                 stdscr.clear()
                 stdscr.addstr(y, x, "💣", curses.color_pair(3))
@@ -38,14 +38,17 @@ def parab(stdscr, angulo1, velocidade1, x_player):
                 #stdscr.addstr(10, 20, f"Y: {y}")
                 stdscr.refresh()
             except curses.error:
-                stdscr.clear()
                 stdscr.refresh()
                 pass
 
             t += 0.05
             time.sleep(0.1)
+
             if(y > h):
                 x = w
+            elif(x < 0):
+                loop_coord = 1
+                break
 
         elif(x > w):
             loop_coord = 1
