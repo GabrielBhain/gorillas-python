@@ -1,9 +1,8 @@
-import sys, time, os, curses, textwrap
+import time, curses, textwrap
 import numpy as np
 from curses import wrapper
-from msvcrt import kbhit, getch
 
-def parab(stdscr, angulo1, velocidade1):
+def parab(stdscr, angulo1, velocidade1, x_player):
     stdscr.clear()
     h, w = stdscr.getmaxyx()
     g = 9.8 
@@ -18,12 +17,19 @@ def parab(stdscr, angulo1, velocidade1):
     y_mao_macaco = 0
     loop_coord = 0
 
+    if(x_player %2 == 0):
+        x_player = -w
+    else:
+        x_player = 0
+
     while(loop_coord == 0):
         if(x < w):
             vy = (velocidade1 * np.sin(theta)) - g*t
-            x = x_mao_macaco + int(((velocidade1*t) * np.cos(theta))) 
+            x =  x_mao_macaco + int(x_player + ((velocidade1*t) * np.cos(theta)))
             y = y_mao_macaco + int(h - ((vy*t))-((0.5*g)*(t**2)))
             
+            if(x < 0):
+                x *= -1
             try:
                 stdscr.clear()
                 stdscr.addstr(y, x, "💣", curses.color_pair(3))
@@ -36,10 +42,12 @@ def parab(stdscr, angulo1, velocidade1):
                 stdscr.refresh()
                 pass
 
-            t += 0.1
+            t += 0.05
             time.sleep(0.1)
-                        
-        elif(y > h or x > w):
+            if(y > h):
+                x = w
+
+        elif(x > w):
             loop_coord = 1
             break    
         else:
@@ -56,9 +64,9 @@ def traj(stdscr):
     angulo1 = 10
     velocidade1 = 20
     loop_ang = 1
-
+    x_player = 1
     stdscr.clear()
-
+      
     while(loop_ang != 0):
         stdscr.addstr(5, 3, f"Ângulo: {angulo1}", curses.color_pair(1))
         key = stdscr.getch()
@@ -68,19 +76,22 @@ def traj(stdscr):
         elif key == curses.KEY_DOWN and angulo1 > 10:
             angulo1 -= 1
         elif key == curses.KEY_ENTER or key in [10, 13]:
-            loop_ang = 0
-            loop_vel = 0
-
-            while(loop_vel == 0):
+            loop_vel = 1
+        
+            while(loop_vel == 1):
                 stdscr.addstr(7, 3, f"Velocidade: {velocidade1}", curses.color_pair(1))
                 key = stdscr.getch()
-                
-                if key == curses.KEY_UP and velocidade1 < 50:
+                if key == curses.KEY_UP and velocidade1 < 80:
                     velocidade1 += 1
                 elif key == curses.KEY_DOWN and velocidade1 > 20:
                     velocidade1 -= 1
                 elif key == curses.KEY_ENTER or key in [10, 13]:
-                    parab(stdscr, angulo1, velocidade1)
+                    parab(stdscr, angulo1, velocidade1, x_player)
+                    angulo1 = 10
+                    velocidade1 = 20
+                    x_player += 1
+                    loop_vel = 0
+                    #loop_ang = 0
                     break
 
     stdscr.refresh()
