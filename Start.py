@@ -1,6 +1,7 @@
 import sys, time, os, curses, textwrap
 from curses import wrapper
 from msvcrt import kbhit, getch
+import Banana
 
 menu = [" Jogar ", " Ranking ", " Como Jogar", " Sair "]
 
@@ -59,7 +60,7 @@ def menu_prin(stdscr, opcao_selecionada):
             stdscr.addstr(y, x, row)
     stdscr.refresh()
 
-# Confirmar saida do usuário
+# Confirmar saída do usuário
 def menu_sair(stdscr, opcao_selecionada):
     stdscr.clear()
     h, w = stdscr.getmaxyx()
@@ -155,12 +156,20 @@ def prin(stdscr):
                         if linha_escolhida == 3:
                             linha_escolhida = 0
                             break
-                        #elif escolha_sair == 0:
+                        elif linha_escolhida == 0:
                             # Dificuldade fácil
-                        #elif escolha_sair == 1:
-                            # Dificuldade normal
-                        #elif escolha_sair == 0:
-                            # Dificuldade difícil
+                            stdscr.refresh()
+                            Banana.jogo()
+
+                        elif linha_escolhida == 1:
+                            #Dificuldade normal
+                            stdscr.refresh()
+                            Banana.jogo("Algum argumento")
+
+                        elif linha_escolhida == 2:
+                            #Dificuldade difícil
+                            stdscr.refresh()
+                            Banana.jogo("Algum argumento")
 
                     jogar(stdscr, linha_escolhida)
 
