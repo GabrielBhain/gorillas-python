@@ -10,7 +10,7 @@ dificuldades = [" Fácil ", " Médio ", " Difícil ", " Voltar "]
 def intro_game():
     os.system('cls')
     intro = "No ano de 2043 um grupo de gorilas inteligentes treinados pela National Aeronautics and Space Administration (NASA) foram enviados a lua Europa do planeta Júpiter, eles ficaram conhecidos mundialmente como os Goriláticos e tinham a finalidade de colonizar a Europa, para descobrir se realmente seria possível que os humanos sobrevivessem nela apenas com os recursos lá presentes. Foi descoberto a existência de algumas plantas que conseguiram se desenvolver naquele solo, algumas delas eram bananeiras que originavam frutos com efeitos nunca antes vistos, alguns deles chegando até a explodir quando em contato com algum objeto (como a roupa espacial dos gorilas, por exemplo). Entretanto, algo inesperado aconteceu... Segundo informações captadas pelos androides enviados para auxiliar os Goriláticos na missão, o grupo teria conseguido ingerir água do planeta pela primeira vez, mas nela estava presente um composto químico que, em contato com os gorilas, afeta o sistema nervoso deles os deixando extremamente agressivos... E agora, o que acontecerá na missão? Será possível retomar a consciência deles a tempo? Você tem a missão de ajudá-los nisso!"
-    intro_format = "\n".join(textwrap.wrap(intro, width=100, initial_indent="\t\t\t\t\t\t", subsequent_indent="\t\t\t\t\t"))
+    intro_format = "\n".join(textwrap.wrap(intro, width=100, initial_indent="\t\t\t\t\t", subsequent_indent="\t\t\t\t"))
     tecla_p = 0
     t = 1
     print("\n\n\n\n")
@@ -23,11 +23,11 @@ def intro_game():
 
             if(i == "!"):
                 sys.stdout.flush()
-                print("\n\n\n\t\t\t\t\t\t\t---------Pressione a tecla P para pular a introdução---------")
+                print("\n\n\n\t\t\t\t\t\t---------Pressione a tecla P para pular a introdução---------")
                 getch()
                 while(tecla_p != 1):
                     if(getch() == b'p'):
-                        tecla_p = 1    
+                        tecla_p = 1
                         break
 
             elif(kbhit()):
@@ -80,9 +80,10 @@ def menu_sair(stdscr, opcao_selecionada):
     stdscr.refresh()
 
 def ranking(stdscr):
+    h, w = stdscr.getmaxyx()
     stdscr.clear()
-    stdscr.addstr(5, 10, "Pontuação do jogador 1: ")
-    stdscr.addstr(7, 10, "Pontuação do jogador 2: ")
+    stdscr.addstr(h//2 -2, w//2 - 10, "Pontuação do jogador 1: ")
+    stdscr.addstr(h//2, w//2 - 10, "Pontuação do jogador 2: ")
     stdscr.refresh()
 
 def jogar(stdscr, opcao_selecionada):
