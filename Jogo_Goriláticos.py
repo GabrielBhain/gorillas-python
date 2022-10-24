@@ -151,7 +151,7 @@ def parab(stdscr, angulo1, velocidade1, x_player, aumentar_grav):
             try:
                 stdscr.clear()
                 gerarCenario(stdscr)
-                stdscr.addstr(y, x, "💣", curses.color_pair(3))
+                stdscr.addstr(y, x, "⌡", curses.color_pair(3))
                 #Checar posições x e y:
                 #stdscr.addstr(10, 10, f"X: {x}")
                 #stdscr.addstr(10, 20, f"Y: {y}")
@@ -232,6 +232,7 @@ def traj(stdscr):
     velocidade1 = 20
     loop_ang = 1
     x_player = 13
+    h, w = stdscr.getmaxyx()
     stdscr.clear()
     gerarCenario(stdscr)
 
@@ -264,9 +265,25 @@ def traj(stdscr):
                     loop_vel = 0
                     break
 
-        if(pontos_p1 >= 50 or pontos_p2 >= 50):
-            loop_ang = 0
+        if(pontos_p1 >= 150 or pontos_p2 >= 150):
+            if(pontos_p1 >= 150):
+                Vitoria_Player1.append("v")
+                stdscr.clear()
+                stdscr.refresh()
+                stdscr.addstr(h//2 - 5, w//2 - 8, "Player 1 WIN", curses.color_pair(2))
+                stdscr.refresh()
+                time.sleep(3)
 
+            elif(pontos_p2 >= 150):
+                Vitoria_Player2.append("v")
+                stdscr.clear()
+                stdscr.refresh()
+                stdscr.addstr(h//2 - 5, w//2 - 8, "Player 2 WIN", curses.color_pair(2))
+                stdscr.refresh()
+                time.sleep(3)
+
+            loop_ang = 0
+            pontos_p1, pontos_p2 = 0, 0
 
     stdscr.refresh()
 

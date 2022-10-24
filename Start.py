@@ -107,24 +107,30 @@ def pontuacao(stdscr, pontos_p1, pontos_p2):
     global Vitoria_Player1, Vitoria_Player2
     h, w = stdscr.getmaxyx()
     if(pontos_p1 >= 50):
-        Vitoria_Player1 += 1
         stdscr.addstr(h//2, w//2 - 10,"Player 1: WIN", curses.color_pair(2))
         time.sleep(2)
         stdscr.refresh()
 
     elif(pontos_p2 >= 50):
-        Vitoria_Player2 += 1
         stdscr.addstr(h//2, w//2 - 10,"Player 2: WIN", curses.color_pair(2))
         time.sleep(2)
         stdscr.refresh()
 
 def ranking(stdscr):
     h, w = stdscr.getmaxyx()
-    stdscr.clear()
-    stdscr.addstr(h//2 -2, w//2 - 10, f"Player 1: {Vitoria_Player1} Vitórias")
-    stdscr.addstr(h//2, w//2 - 10, f"Player 2: {Vitoria_Player2} Vitórias")
-    stdscr.refresh()
+    if(Vitoria_Player1 < Vitoria_Player2):
+        stdscr.clear()
+        stdscr.addstr(h//2 -2, w//2 - 10, f"Player 2: {len(Vitoria_Player2)} Vitórias")
+        stdscr.addstr(h//2, w//2 - 10, f"Player 1: {len(Vitoria_Player1)} Vitórias")
+        stdscr.refresh()
 
+    else:
+        stdscr.clear()
+        stdscr.addstr(h//2 -2, w//2 - 10, f"Player 1: {len(Vitoria_Player1)} Vitórias")
+        stdscr.addstr(h//2, w//2 - 10, f"Player 2: {len(Vitoria_Player2)} Vitórias")
+        stdscr.refresh()
+
+        
 def jogar(stdscr, opcao_selecionada):
     stdscr.clear()
     h, w = stdscr.getmaxyx()
@@ -150,7 +156,6 @@ def prin(stdscr):
     curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLUE)
     linha_escolhida = 0
     escolha_sair = 1
-    global pontos_p1, pontos_p2
 
     menu_prin(stdscr, linha_escolhida)
 
@@ -205,9 +210,8 @@ def prin(stdscr):
                         elif linha_escolhida == 0:
                             # Dificuldade fácil
                             stdscr.refresh()
-                            pontuacao(stdscr, pontos_p1, pontos_p2)
                             Jogo_Goriláticos.jogo(1)
-                            
+                            pontuacao(stdscr, pontos_p1, pontos_p2)
                             wrapper(prin) 
 
                         elif linha_escolhida == 1:
