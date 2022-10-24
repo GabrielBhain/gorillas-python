@@ -1,7 +1,7 @@
-import time, curses, sys
+import time, curses, random
 import numpy as np
 from curses import wrapper
-import random
+from Pontos import Vitoria_Player1, Vitoria_Player2
 
 o1,o2,o3,o4 = 0,0,0,0
 coords1 = []
@@ -193,6 +193,7 @@ def parab(stdscr, angulo1, velocidade1, x_player, aumentar_grav):
                 gerarCenario(stdscr)
                 pontos_p2 += 50
                 break
+            
             elif [y, x] in posicaoGorilaP2:
                 stdscr.addstr(h//2 - 5, w//2 - 10, "+50 Pontos para o Player 1", curses.color_pair(2))
                 stdscr.refresh()
@@ -203,7 +204,7 @@ def parab(stdscr, angulo1, velocidade1, x_player, aumentar_grav):
                 break
             
             t += 0.05
-            time.sleep(0.02)
+            time.sleep(0.05)
 
             if(y > h):
                 loop_coord = 1
@@ -220,8 +221,9 @@ def parab(stdscr, angulo1, velocidade1, x_player, aumentar_grav):
         
     stdscr.refresh()
 
+
 def traj(stdscr):
-    global pontos_p1, pontos_p2
+    global pontos_p1, pontos_p2, Vitoria_Player1, Vitoria_Player2
     curses.curs_set(0)
     curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLUE)
     curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_GREEN)
@@ -235,7 +237,7 @@ def traj(stdscr):
 
     while(loop_ang != 0):
         stdscr.refresh()
-        stdscr.addstr(1, 1, f" Player 1: {pontos_p1}   Player 2: {pontos_p2}", curses.color_pair(1))
+        stdscr.addstr(1, 3, f" Player 1: {pontos_p1}   Player 2: {pontos_p2}", curses.color_pair(1))
         stdscr.addstr(5, 3, f" Ângulo: {angulo1} ", curses.color_pair(1))
         
         key = stdscr.getch()
@@ -264,8 +266,7 @@ def traj(stdscr):
 
         if(pontos_p1 >= 50 or pontos_p2 >= 50):
             loop_ang = 0
-            pontos_p1, pontos_p2 = 0, 0
-            break
+
 
     stdscr.refresh()
 
@@ -280,6 +281,6 @@ def jogo(num):
         elif num == 2:
             o4 = 3
         wrapper(traj)
-        
+
     except curses.error:
         pass
