@@ -3,7 +3,14 @@ import numpy as np
 from curses import wrapper
 from Pontos import Vitoria_Player1, Vitoria_Player2
 
+coordCometa1 = [random.randint(5,20),20]
+coordCometa2 = [random.randint(5,20),60]
+coordCometa3 = [random.randint(5,20),105]
+animatedObject = True
+vidaCometa = [0,0,0]
 o1,o2,o3,o4 = 0,0,0,0
+cor1,cor2 = 0,0
+
 coords1 = []
 coords2 = []
 coords3 = []
@@ -13,8 +20,8 @@ objeto2 = []
 objeto3 = []
 objeto4 = []
 
-altura1 = random.randint(15,35)
-altura2 = random.randint(15,35)
+altura1 = random.randint(15,25)
+altura2 = random.randint(15,25)
 
 
 posicaoGorilaP1 = [[altura1 - 3,9],[altura1 - 3,10],[altura1 - 3,11], [altura1 - 2,9],[altura1 - 2,10],[altura1 - 2,11],[altura1 - 1,9],[altura1 - 1,10],[altura1 - 1,11]]
@@ -24,7 +31,31 @@ gorilacabeca = [['á','“',']'],['[','”','à']]
 gorilacorpo = ['/','◙','\\']
 gorilapernas = [['(',' ','('],[')',' ',')']]
 
-def gorilaP1(stdscr):
+
+def gerarCenarioBase(stdscr):
+    for i1 in range(altura1 ,altura1 + 7):
+        for g1 in range (6,15):
+            stdscr.addstr(i1,g1,'█')
+    for k1 in range(altura1 + 1,altura1 + 6):
+            stdscr.addstr(k1,15,'█')
+    for z1 in range(altura1 + 1,altura1 + 6):
+            stdscr.addstr(z1,5,'█')
+    for j1 in range(altura1 + 2, altura1 + 5):
+            stdscr.addstr(j1,16,'█')
+    for x1 in range(altura1 + 2, altura1 + 5):
+            stdscr.addstr(x1,4,'█')
+    for i2 in range(altura2,altura2 + 7):
+        for g2 in range (111,120):
+            stdscr.addstr(i2,g2,'█')
+    for k2 in range(altura2 +1,altura2 +6):
+            stdscr.addstr(k2,110,'█')
+    for z2 in range(altura2 + 1,altura2 + 6):
+            stdscr.addstr(z2,120,'█')
+    for j2 in range(altura2 + 2,altura2 + 5):
+            stdscr.addstr(j2,109,'█')
+    for x2 in range(altura2 + 2, altura2 + 5):
+            stdscr.addstr(x2,121,'█')
+    stdscr.refresh()
     numero = 0
     for y,x in posicaoGorilaP1[0], posicaoGorilaP1[1], posicaoGorilaP1[2]:
         stdscr.addstr(y, x, gorilacabeca[1][numero])
@@ -38,8 +69,6 @@ def gorilaP1(stdscr):
         stdscr.addstr(y, x, gorilapernas[1][numero])
         numero += 1
     stdscr.refresh()
-
-def gorilaP2(stdscr):
     numero = 0
     for y,x in posicaoGorilaP2[0], posicaoGorilaP2[1], posicaoGorilaP2[2]:
         stdscr.addstr(y, x, gorilacabeca[0][numero])
@@ -54,27 +83,6 @@ def gorilaP2(stdscr):
         numero += 1
     stdscr.refresh()
 
-def planeta1(stdscr):
-    for i in range(altura1 ,altura1 + 7):
-        for g in range (6,15):
-            stdscr.addstr(i,g,'█')
-    for k in range(altura1 + 1,altura1 + 6):
-            stdscr.addstr(k,15,'█')
-    for j in range(altura1 + 2, altura1 + 5):
-            stdscr.addstr(j,16,'█')
-    stdscr.refresh()
-
-
-def planeta2(stdscr):
-    for i in range(altura2,altura2 + 7):
-        for g in range (111,120):
-            stdscr.addstr(i,g,'█')
-    for k in range(altura2 +1,altura2 +6):
-            stdscr.addstr(k,110,'█')
-    for j in range(altura2 + 2,altura2 + 5):
-            stdscr.addstr(j,109,'█')
-    stdscr.refresh()
-
 def printObject(stdscr,object,objectCoords):
     for num in range(0,len(object)):
         stdscr.addstr(objectCoords[num][0],objectCoords[num][1],object[num])
@@ -82,15 +90,15 @@ def printObject(stdscr,object,objectCoords):
 def chooseObject(coords,objeto, xf):
     numeroObjeto = random.randint(1,3)
     if numeroObjeto == 1:
-        yf = random.randint(12,38)
+        yf = random.randint(12,25)
         objeto = ['Å','/','º','\\','/','ᴳ','ᴿ','ᴸ','\\','|','╔','═','╗','|','|','║','▒','║','|','|','║','▒','║','|','|','║','▒','║','|','|','║','▒','║','|','╔','╚','W','╝','╗']
         coords = [[yf-4,xf],[yf-3,xf-1],[yf-3,xf],[yf-3,xf+1],[yf-2,xf-2],[yf-2,xf-1],[yf-2,xf],[yf-2,xf+1],[yf-2,xf+2],[yf-1,xf-2],[yf-1,xf-1],[yf-1,xf],[yf-1,xf+1],[yf-1,xf+2],[yf,xf-2],[yf,xf-1],[yf,xf],[yf,xf+1],[yf,xf+2],[yf+1,xf-2],[yf+1,xf-1],[yf+1,xf],[yf+1,xf+1],[yf+1,xf+2],[yf+2,xf-2],[yf+2,xf-1],[yf+2,xf],[yf+2,xf+1],[yf+2,xf+2],[yf+3,xf-2],[yf+3,xf-1],[yf+3,xf],[yf+3,xf+1],[yf+3,xf+2],[yf+4,xf-2],[yf+4,xf-1],[yf+4,xf],[yf+4,xf+1],[yf+4,xf+2]]
     elif numeroObjeto == 2:
-        yf = random.randint(12,38)
+        yf = random.randint(12,25)
         objeto = ['▄','▄','▄','▐','▄','◙','▄','▌']
         coords = [[yf-1,xf-1],[yf-1,xf],[yf-1,xf+1],[yf,xf-2],[yf,xf-1],[yf,xf],[yf,xf+1],[yf,xf+2]]
     elif numeroObjeto == 3:
-        yf = random.randint(12,38)
+        yf = random.randint(12,25)
         objeto = ['▄','▄','▄','▄','▄','█','█','█','█','█','█','█','█','█','█','█','█''█','█','█','▀','▀','▀','▀','▀']
         coords = [[yf-1,xf-2],[yf-1,xf-1],[yf-1,xf],[yf-1,xf+1],[yf-1,xf+2],[yf,xf-3],[yf,xf-2],[yf,xf-1],[yf,xf],[yf,xf+1],[yf,xf+2],[yf,xf+3],[yf+1,xf-3],[yf+1,xf-2],[yf+1,xf-1],[yf+1,xf],[yf+1,xf+1],[yf+1,xf+2],[yf+1,xf+3],[yf+2,xf-2],[yf+2,xf-1],[yf+2,xf],[yf+2,xf+1],[yf+2,xf+2]]
     return coords,objeto
@@ -102,12 +110,30 @@ def gencoord():
     coords3,objeto3 = chooseObject(coords3,objeto3,75)
     coords4,objeto4 = chooseObject(coords4,objeto4,95)
 
+
 def gerarCenario(stdscr):
-    global objeto1,objeto2,objeto3,objeto4,coords1,coords2,coords3,coords4,o1,o2,o3,o4
-    planeta1(stdscr)
-    planeta2(stdscr)
-    gorilaP1(stdscr)
-    gorilaP2(stdscr)
+    global objeto1,objeto2,objeto3,objeto4,coords1,coords2,coords3,coords4,o1,o2,o3,o4,coordCometa1,coordCometa2,coordCometa3,vidaCometa
+    gerarCenarioBase(stdscr)
+    h,w = stdscr.getmaxyx()
+    if animatedObject == True:
+        if vidaCometa[0] == 0:
+            if coordCometa1[0] < h:
+                stdscr.addstr(coordCometa1[0],coordCometa1[1],'Φ')
+                coordCometa1[0] += 1
+            if coordCometa1[0] == h:
+                coordCometa1[0] = 5
+        if vidaCometa[1] == 0:
+            if coordCometa2[0] < h:
+                stdscr.addstr(coordCometa2[0],coordCometa2[1],'Φ')
+                coordCometa2[0] += 1
+            if coordCometa2[0] == h:
+                coordCometa2[0] = 5
+        if vidaCometa[2] == 0:
+            if coordCometa3[0] < h:
+                stdscr.addstr(coordCometa3[0],coordCometa3[1],'Φ')
+                coordCometa3[0] += 1
+            if coordCometa3[0] == h:
+                coordCometa3[0] = 5
     if o1 < 3:
         printObject(stdscr,objeto1,coords1)
     if o2 < 3:
@@ -119,7 +145,7 @@ def gerarCenario(stdscr):
 
 pontos_p1, pontos_p2 = 0, 0
 def parab(stdscr, angulo1, velocidade1, x_player, aumentar_grav):
-    global o1, o2, o3, o4, pontos_p1, pontos_p2
+    global o1, o2, o3, o4, pontos_p1, pontos_p2,coordCometa1,coordCometa2,coordCometa3,vidaCometa
     stdscr.clear()
     h, w = stdscr.getmaxyx()
     g = 9.8*aumentar_grav 
@@ -193,7 +219,6 @@ def parab(stdscr, angulo1, velocidade1, x_player, aumentar_grav):
                 gerarCenario(stdscr)
                 pontos_p2 += 50
                 break
-            
             elif [y, x] in posicaoGorilaP2:
                 stdscr.addstr(h//2 - 5, w//2 - 10, "+50 Pontos para o Player 1", curses.color_pair(2))
                 stdscr.refresh()
@@ -203,6 +228,22 @@ def parab(stdscr, angulo1, velocidade1, x_player, aumentar_grav):
                 pontos_p1 += 50
                 break
             
+            if [y, x] == coordCometa1 and vidaCometa[0] == 0:
+                vidaCometa[0] = 1
+                stdscr.clear()
+                gerarCenario(stdscr)
+                break
+            if [y, x] == coordCometa2 and vidaCometa[1] == 0:
+                vidaCometa[1] = 1
+                stdscr.clear()
+                gerarCenario(stdscr)
+                break
+            if [y, x] == coordCometa3 and vidaCometa[2] == 0:
+                vidaCometa[2] = 1
+                stdscr.clear()
+                gerarCenario(stdscr)
+                break
+
             t += 0.05
             time.sleep(0.05)
 
@@ -290,13 +331,19 @@ def traj(stdscr):
 def jogo(num):
     try:
         gencoord()
-        global o1, o2, o3, o4
+        global o1, o2, o3, o4, animatedObject, vidaCometa
         o1, o2, o3, o4 = 0, 0, 0, 0
         if num == 1:
             o3 = 3
             o4 = 4
+            animatedObject = False
+            vidaCometa = [1,1,1]
         elif num == 2:
-            o4 = 3
+            animatedObject = False
+            vidaCometa = [1,1,1]
+        elif num == 3:
+            animatedObject = True
+            vidaCometa = [0,0,0]
         wrapper(traj)
 
     except curses.error:
