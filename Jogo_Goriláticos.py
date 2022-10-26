@@ -280,7 +280,7 @@ def traj(stdscr):
     while(loop_ang != 0):
         stdscr.refresh()
         stdscr.addstr(1, 3, f" Player 1: {pontos_p1}   Player 2: {pontos_p2}", curses.color_pair(1))
-        stdscr.addstr(5, 3, f" Ângulo: {angulo1} ", curses.color_pair(1))
+        stdscr.addstr(5, 3, f" Ângulo: {angulo1}°", curses.color_pair(1))
         
         key = stdscr.getch()
 
@@ -288,11 +288,13 @@ def traj(stdscr):
             angulo1 += 1
         elif key == curses.KEY_DOWN and angulo1 > 10:
             angulo1 -= 1
+        elif key == curses.KEY_HOME:
+            break
         elif key == curses.KEY_ENTER or key in [10, 13]:
             loop_vel = 1
         
             while(loop_vel == 1):
-                stdscr.addstr(7, 3, f" Velocidade: {velocidade1} ", curses.color_pair(1))
+                stdscr.addstr(7, 3, f" Velocidade: {velocidade1}m/s", curses.color_pair(1))
                 key = stdscr.getch()
                 if key == curses.KEY_UP and velocidade1 < 80:
                     velocidade1 += 1

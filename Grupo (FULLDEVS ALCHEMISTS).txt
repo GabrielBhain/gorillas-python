@@ -1,0 +1,6 @@
+Arthur Almeida dos Santos
+Gabriel Augusto Ferreira
+Max José de Aragão Neto
+Raul Angelo Gonçalves da Silva
+
+OBS: Inicie o jogo com o Start.py
