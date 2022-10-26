@@ -114,26 +114,26 @@ def gencoord():
 def gerarCenario(stdscr):
     global objeto1,objeto2,objeto3,objeto4,coords1,coords2,coords3,coords4,o1,o2,o3,o4,coordCometa1,coordCometa2,coordCometa3,vidaCometa
     gerarCenarioBase(stdscr)
-    h,w = stdscr.getmaxyx()
+    h, w = stdscr.getmaxyx()
     if animatedObject == True:
         if vidaCometa[0] == 0:
             if coordCometa1[0] < h:
                 stdscr.addstr(coordCometa1[0],coordCometa1[1],'Φ')
                 coordCometa1[0] += 1
             if coordCometa1[0] == h:
-                coordCometa1[0] = 5
+                coordCometa1[0] = 0
         if vidaCometa[1] == 0:
             if coordCometa2[0] < h:
                 stdscr.addstr(coordCometa2[0],coordCometa2[1],'Φ')
                 coordCometa2[0] += 1
             if coordCometa2[0] == h:
-                coordCometa2[0] = 5
+                coordCometa2[0] = 0
         if vidaCometa[2] == 0:
             if coordCometa3[0] < h:
                 stdscr.addstr(coordCometa3[0],coordCometa3[1],'Φ')
                 coordCometa3[0] += 1
             if coordCometa3[0] == h:
-                coordCometa3[0] = 5
+                coordCometa3[0] = 0
     if o1 < 3:
         printObject(stdscr,objeto1,coords1)
     if o2 < 3:
@@ -289,6 +289,7 @@ def traj(stdscr):
         elif key == curses.KEY_DOWN and angulo1 > 10:
             angulo1 -= 1
         elif key == curses.KEY_HOME:
+            pontos_p1, pontos_p2 = 0, 0
             break
         elif key == curses.KEY_ENTER or key in [10, 13]:
             loop_vel = 1
@@ -336,7 +337,7 @@ def jogo(num):
         global o1, o2, o3, o4, animatedObject, vidaCometa
         o1, o2, o3, o4 = 0, 0, 0, 0
         if num == 1:
-            o3 = 3
+            o1 = 3
             o4 = 4
             animatedObject = False
             vidaCometa = [1,1,1]
